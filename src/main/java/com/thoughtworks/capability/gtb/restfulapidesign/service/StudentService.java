@@ -21,11 +21,11 @@ public class StudentService {
         return TeamListSingletonFactory.getInstance();
     }
 
-    public List<Team> groupStudents() {
+    public void groupStudents() {
         List<Student> studentList = this.getStudentList();
-        List<Student> newStudentList = new ArrayList<Student>();
+        List<Student> newStudentList = new ArrayList<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        studentList.stream().forEach((student)->{
+        studentList.forEach((student)->{
             try {
                 Student newStudent = objectMapper.readValue(
                         objectMapper.writeValueAsString(student), Student.class);
@@ -43,7 +43,6 @@ public class StudentService {
         for(int i = 0; i < newStudentList.size(); i++) {
             teamList.get(i%6).getStudentList().add(newStudentList.get(i));
         }
-        return teamList;
     }
 
     public void addStudent(Student student) {
@@ -66,21 +65,18 @@ public class StudentService {
     }
 
     public List<Student> getStudentListByGender(String gender) {
-        return this.getStudentList().stream().filter((student -> {
-            return student.getGender().equals(gender);
-        })).collect(Collectors.toList());
+        return this.getStudentList().stream().filter((
+                student -> student.getGender().equals(gender))).collect(Collectors.toList());
     }
 
     public Student getStudentById(int id) {
-        return this.getStudentList().stream().filter((student -> {
-            return student.getId().equals(id);
-        })).findFirst().orElse(null);
+        return this.getStudentList().stream().filter((
+                student -> student.getId().equals(id))).findFirst().orElse(null);
     }
 
     public void updateStudentById(int id, Student student) {
-        Student oldStudent = this.getStudentList().stream().filter((std -> {
-            return std.getId().equals(id);
-        })).findFirst().orElse(null);
+        Student oldStudent = this.getStudentList().stream().filter(
+                (std -> std.getId().equals(id))).findFirst().orElse(null);
         if (oldStudent != null) {
             if (student.getGender() != null)
                 oldStudent.setGender(student.getGender());

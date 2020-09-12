@@ -7,7 +7,6 @@ import com.thoughtworks.capability.gtb.restfulapidesign.service.StudentService;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.TeamListSingletonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,13 +50,13 @@ public class StudentController {
     }
 
     @GetMapping("/teams")
-    public List<Team> getTeamList() throws Exception{
+    public List<Team> getTeamList() {
         return TeamListSingletonFactory.getInstance();
     }
 
     @PostMapping("/teams")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTeamList() throws Exception{
+    public void createTeamList() {
         studentService.groupStudents();
     }
 

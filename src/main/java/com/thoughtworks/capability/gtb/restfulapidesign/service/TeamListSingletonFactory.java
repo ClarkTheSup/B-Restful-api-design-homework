@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class TeamListSingletonFactory {
-    private static List<Team> teamList = new ArrayList<Team>();
+    private static final List<Team> teamList = new ArrayList<>();
     private TeamListSingletonFactory() {}
 
     static {

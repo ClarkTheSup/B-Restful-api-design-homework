@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class StudentListSingletonFactory {
-    private static List<Student> studentList = new ArrayList<Student>();
+    private static final List<Student> studentList = new ArrayList<>();
     private StudentListSingletonFactory() {}
 
     public static List<Student> getInstance() {
