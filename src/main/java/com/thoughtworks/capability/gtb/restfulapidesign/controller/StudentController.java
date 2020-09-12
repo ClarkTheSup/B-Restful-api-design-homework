@@ -50,32 +50,20 @@ public class StudentController {
         studentService.updateStudentById(id, student);
     }
 
-
-
-
-
-
-
-
-    @GetMapping("/student/teams")
+    @GetMapping("/teams")
     public List<Team> getTeamList() throws Exception{
         return TeamListSingletonFactory.getInstance();
     }
 
-    @PostMapping("/student/teams")
+    @PostMapping("/teams")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Team> createTeamList() throws Exception{
-        List<Team> teamList = studentService.groupStudents();
-        return teamList;
+    public void createTeamList() throws Exception{
+        studentService.groupStudents();
     }
 
-    @PostMapping("/student/teams/{index}/{name}")
-    public ResponseEntity changeTeamName(@PathVariable int index, @PathVariable String name) {
-        try {
-            studentService.changeTeamName(index, name);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (Exception exception) {
-            return ResponseEntity.status(409).build();
-        }
+    @PostMapping("/teams/{index}/{name}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void changeTeamName(@PathVariable int index, @PathVariable String name) {
+        studentService.changeTeamName(index, name);
     }
 }

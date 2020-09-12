@@ -11,11 +11,11 @@ public class TeamListSingletonFactory {
     private static List<Team> teamList = new ArrayList<Team>();
     private TeamListSingletonFactory() {}
 
-//    static {
-//        for (int i=0; i<6; i++) {
-//            teamList.add(new Team("Team " + (i + 1)));
-//        }
-//    }
+    static {
+        for (int i=0; i<6; i++) {
+            teamList.add(new Team(i, "Team " + (i + 1), ""));
+        }
+    }
 
     public static List<Team> getInstance() {
         return teamList;

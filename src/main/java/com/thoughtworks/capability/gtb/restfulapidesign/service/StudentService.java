@@ -81,8 +81,13 @@ public class StudentService {
         Student oldStudent = this.getStudentList().stream().filter((std -> {
             return std.getId().equals(id);
         })).findFirst().orElse(null);
-        oldStudent.setGender(student.getGender());
-        oldStudent.setName(student.getName());
-        oldStudent.setNote(student.getNote());
+        if (oldStudent != null) {
+            if (student.getGender() != null)
+                oldStudent.setGender(student.getGender());
+            if (student.getName() != null)
+                oldStudent.setName(student.getName());
+            if (student.getNote() != null)
+                oldStudent.setNote(student.getNote());
+        }
     }
 }
