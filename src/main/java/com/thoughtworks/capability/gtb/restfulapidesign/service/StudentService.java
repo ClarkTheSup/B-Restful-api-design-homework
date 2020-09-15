@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Student;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Team;
+import com.thoughtworks.capability.gtb.restfulapidesign.repository.StudentListSingletonFactory;
+import com.thoughtworks.capability.gtb.restfulapidesign.repository.TeamListSingletonFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -84,6 +86,14 @@ public class StudentService {
                 oldStudent.setName(student.getName());
             if (student.getNote() != null)
                 oldStudent.setNote(student.getNote());
+        }
+    }
+
+    public List<Student> getStudents(String gender) {
+        if (gender == null) {
+            return StudentListSingletonFactory.getInstance();
+        } else {
+            return getStudentListByGender(gender);
         }
     }
 }

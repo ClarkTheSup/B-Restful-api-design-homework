@@ -1,4 +1,4 @@
-package com.thoughtworks.capability.gtb.restfulapidesign.service;
+package com.thoughtworks.capability.gtb.restfulapidesign.repository;
 
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Team;
 import org.springframework.stereotype.Service;

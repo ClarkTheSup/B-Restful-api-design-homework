@@ -2,10 +2,8 @@ package com.thoughtworks.capability.gtb.restfulapidesign.controller;
 
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Student;
 import com.thoughtworks.capability.gtb.restfulapidesign.domain.Team;
-import com.thoughtworks.capability.gtb.restfulapidesign.service.StudentListSingletonFactory;
 import com.thoughtworks.capability.gtb.restfulapidesign.service.StudentService;
-import com.thoughtworks.capability.gtb.restfulapidesign.service.TeamListSingletonFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thoughtworks.capability.gtb.restfulapidesign.repository.TeamListSingletonFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +11,11 @@ import java.util.List;
 
 @RestController
 public class StudentController {
-    @Autowired
-    StudentService studentService;
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @PostMapping("/students")
     @ResponseStatus(HttpStatus.CREATED)
@@ -23,19 +24,13 @@ public class StudentController {
     }
 
     @DeleteMapping("/students")
-    @ResponseStatus(HttpStatus.CREATED)
     public void deleteStudent(@RequestBody Student student) {
         studentService.deleteStudent(student);
     }
 
     @GetMapping("/students")
     public List<Student> getStudentList(@RequestParam(required = false) String gender) {
-        if (gender == null) {
-            return StudentListSingletonFactory.getInstance();
-        } else {
-            return studentService.getStudentListByGender(gender);
-        }
-
+        return studentService.getStudents(gender);
     }
 
     @GetMapping("/students/{id}")
@@ -44,8 +39,7 @@ public class StudentController {
     }
 
     @PatchMapping("/students/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void getStudentById(@PathVariable int id, @RequestBody Student student) {
+    public void updateStudentById(@PathVariable int id, @RequestBody Student student) {
         studentService.updateStudentById(id, student);
     }
 
@@ -60,8 +54,7 @@ public class StudentController {
         studentService.groupStudents();
     }
 
-    @PostMapping("/teams/{index}/{name}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PatchMapping("/teams/{index}/{name}")
     public void changeTeamName(@PathVariable int index, @PathVariable String name) {
         studentService.changeTeamName(index, name);
     }
